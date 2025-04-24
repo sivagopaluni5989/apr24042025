@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gopaluni Family Tree</title>
+    <style>
+        body {
+            background: url("{{ url_for('static', filename='images/bgimage.jpg') }}") no-repeat center center fixed;
+            background-size: cover;
+            color: #f1f1f1;
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #ffd700;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            font-family: 'Brush Script MT', cursive;
+        }
+        .hero-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+        .card {
+            background: rgba(44, 44, 44, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            padding: 15px;
+            width: 250px;
+            transition: all 0.3s ease-in-out;
+        }
+        .card img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .card h2 {
+            color: #00ced1;
+            margin: 10px 0 5px;
+            cursor: pointer;
+            font-family: Geneva, sans-serif;
+        }
+        .card p {
+            color: #aaa;
+            margin: 4px 0;
+            font-family: 'Brush Script MT', cursive;
+        }
+        .details {
+            display: none;
+            margin-top: 10px;
+        }
+    </style>
+    <script>
+        function toggleDetails(id) {
+            const detailsDiv = document.getElementById(id);
+            if (detailsDiv.style.display === "none" || detailsDiv.style.display === "") {
+                detailsDiv.style.display = "block";
+            } else {
+                detailsDiv.style.display = "none";
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Gopaluni Family Tree</h1>
+    <div class="hero-container">
+        {% for hero in heroes %}
+            <div class="card">
+                <img src="{{ url_for('static', filename='images/' + hero.image) }}" alt="Photo of {{ hero.name }}">
+                <h2 onclick="toggleDetails('details-{{ loop.index }}')">{{ hero.title }} {{ hero.name }}</h2>
+                <div class="details" id="details-{{ loop.index }}">
+                    <p><strong>History:</strong></p>
+                    {% for item in hero.History %}
+                        <p>{{ item }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+
